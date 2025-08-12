@@ -13,10 +13,10 @@
         justify-content: center;
         align-items: center;
         height: 100vh;
-    }
-    .lock-screen, .gallery, .final-section {
-        display: none;
         text-align: center;
+    }
+    .lock-screen, .countdown, .gallery, .final-section {
+        display: none;
         padding: 20px;
     }
     .active { display: block; }
@@ -45,17 +45,13 @@
         max-width: 100%;
         border-radius: 15px;
         box-shadow: 0px 4px 15px rgba(0,0,0,0.2);
-        transition: transform 0.5s ease;
+        transition: opacity 1s ease;
     }
     .phrase {
         font-size: 18px;
         margin-top: 10px;
         color: #b3003b;
         font-style: italic;
-    }
-    .hearts {
-        position: absolute;
-        pointer-events: none;
     }
     .final-section h1 {
         font-size: 50px;
@@ -64,6 +60,8 @@
 </style>
 </head>
 <body>
+
+    <!-- Pantalla contraseña -->
     <div class="lock-screen active">
         <div class="heart-lock">❤️🔒</div>
         <p>Ingresa la contraseña</p>
@@ -72,12 +70,20 @@
         <button onclick="unlock()">Abrir</button>
     </div>
 
+    <!-- Cuenta regresiva -->
+    <div class="countdown">
+        <h2 id="countMessage">💌 Preparando algo especial...</h2>
+        <h1 id="countNumber">10</h1>
+    </div>
+
+    <!-- Galería -->
     <div class="gallery">
         <img id="photo" src="img1.jpg" alt="Foto Romántica">
         <p class="phrase" id="phrase">Aquí irá tu frase</p>
         <button id="nextPair">Continuar</button>
     </div>
 
+    <!-- Final -->
     <div class="final-section">
         <video id="loveVideo" controls width="100%">
             <source src="video.mp4" type="video/mp4">
@@ -87,7 +93,7 @@
         <p id="finalPhrase">Aquí puedes poner tu frase final...</p>
     </div>
 
-    <!-- 🎵 Audio de fondo -->
+    <!-- Música -->
     <audio id="bgMusic" loop>
         <source src="musica.mp3" type="audio/mpeg">
         Tu navegador no soporta audio HTML5.
@@ -96,39 +102,63 @@
 <script>
     const passwordCorrecta = "12/07/24"; // Cambia tu contraseña aquí
     const fotos = [
-        { img: "img1.jpg", frase: "tu y yo 💕" },
-        { img: "img2.jpg", frase: "un equipo" },
+        { img: "img1.jpg", frase: "Tu y yo 💕" },
+        { img: "img2.jpg", frase: "Un equipo" },
         { img: "img3.jpg", frase: "Siempre juntos" },
-        { img: "img4.jpg", frase: "Eres mi todo" },
-        { img: "img5.jpg", frase: "Siempre juntos" },
-        { img: "img6.jpg", frase: "Siempre juntos" },
-        { img: "img7.jpg", frase: "Siempre juntos" },
-        { img: "img8.jpg", frase: "Siempre juntos" },
-        { img: "img9.jpg", frase: "Siempre juntos" },
-        { img: "img10.jpg", frase: "Siempre juntos" },
-        { img: "img11.jpg", frase: "Siempre juntos" },
-        { img: "img12.jpg", frase: "Siempre juntos" },
-        { img: "img13.jpg", frase: "Siempre juntos" },
-        { img: "img14.jpg", frase: "Siempre juntos" }
+        { img: "img4.jpg", frase: "Eres mi todo" }
+    ];
+
+    const mensajes = [
+        "💌 Hoy celebramos nuestro amor...",
+        "🌹 Cada día contigo es especial...",
+        "💫 Eres mi sueño hecho realidad...",
+        "💖 Gracias por existir...",
+        "✨ Mi corazón late por ti...",
+        "🌈 Siempre juntos...",
+        "🥰 Tú y yo contra el mundo...",
+        "💍 Eres mi para siempre...",
+        "💕 Te amo más de lo que imaginas...",
+        "📸 Prepárate para nuestros recuerdos..."
     ];
 
     let index = 0;
+    let segundos = 10;
+    let timer;
 
     function unlock() {
         const pass = document.getElementById("password").value;
         if(pass === passwordCorrecta) {
             document.querySelector(".lock-screen").classList.remove("active");
-            document.querySelector(".gallery").classList.add("active");
-            mostrarFoto();
-            document.getElementById("bgMusic").play(); // 🎵 Empieza la música al desbloquear
+            document.querySelector(".countdown").classList.add("active");
+            iniciarCuentaRegresiva();
         } else {
             alert("Contraseña incorrecta");
         }
     }
 
+    function iniciarCuentaRegresiva() {
+        timer = setInterval(() => {
+            document.getElementById("countMessage").innerText = mensajes[10 - segundos];
+            document.getElementById("countNumber").innerText = segundos;
+            segundos--;
+            if (segundos < 0) {
+                clearInterval(timer);
+                document.querySelector(".countdown").classList.remove("active");
+                document.querySelector(".gallery").classList.add("active");
+                mostrarFoto();
+                document.getElementById("bgMusic").play();
+            }
+        }, 1000);
+    }
+
     function mostrarFoto() {
-        document.getElementById("photo").src = fotos[index].img;
-        document.getElementById("phrase").innerText = fotos[index].frase;
+        const imgEl = document.getElementById("photo");
+        imgEl.style.opacity = 0;
+        setTimeout(() => {
+            imgEl.src = fotos[index].img;
+            document.getElementById("phrase").innerText = fotos[index].frase;
+            imgEl.style.opacity = 1;
+        }, 500);
     }
 
     document.getElementById("photo").addEventListener("click", () => {
@@ -151,6 +181,7 @@
 
 </body>
 </html>
+
 
 
 
