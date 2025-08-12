@@ -1,19 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
- <body>
-
-    <!-- Aquí empieza tu música -->
-    <audio autoplay loop>
-        <source src="musica.mp3" type="audio/mpeg">
-        Tu navegador no soporta el audio.
-    </audio>
-    <!-- Aquí termina tu música -->
-
-    <h1>Bienvenido a mi página</h1>
-    <p>Este es mi regalo especial ❤️</p>
-
-</body>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Página Romántica</title>
@@ -100,6 +87,12 @@
         <p id="finalPhrase">Aquí puedes poner tu frase final...</p>
     </div>
 
+    <!-- 🎵 Audio de fondo -->
+    <audio id="bgMusic" loop>
+        <source src="musica.mp3" type="audio/mpeg">
+        Tu navegador no soporta audio HTML5.
+    </audio>
+
 <script>
     const passwordCorrecta = "12/07/24"; // Cambia tu contraseña aquí
     const fotos = [
@@ -117,6 +110,7 @@
             document.querySelector(".lock-screen").classList.remove("active");
             document.querySelector(".gallery").classList.add("active");
             mostrarFoto();
+            document.getElementById("bgMusic").play(); // 🎵 Empieza la música al desbloquear
         } else {
             alert("Contraseña incorrecta");
         }
@@ -147,5 +141,6 @@
 
 </body>
 </html>
+
 
 
