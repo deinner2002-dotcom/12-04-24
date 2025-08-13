@@ -178,20 +178,18 @@
         if(index % 2 === 0 && index + 1 < fotos.length) {
             index++;
             mostrarFoto();
-           } else if (index + 1 === fotos.length) {
-        // Última imagen mostrada -> ahora ir al video
-        document.querySelector(".gallery").classList.remove("active");
-        document.querySelector(".final-section").classList.add("active");
-
-        // 🚀 Detener música
-        const music = document.getElementById("bgMusic");
-        music.pause();
-        music.currentTime = 0;
-
-        // 🚀 Reproducir video
-        const video = document.getElementById("loveVideo");
-        video.play();
             
+        }
+    });
+
+    document.getElementById("nextPair").addEventListener("click", () => {
+        if(index + 1 < fotos.length) {
+            index++;
+            mostrarFoto();
+        } else {
+            document.querySelector(".gallery").classList.remove("active");
+            document.querySelector(".final-section").classList.add("active");
+
         }
     });
 </script>
