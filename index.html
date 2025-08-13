@@ -178,18 +178,19 @@
         if(index % 2 === 0 && index + 1 < fotos.length) {
             index++;
             mostrarFoto();
-            } else {
-            document.querySelector(".gallery").classList.remove("active");
-            document.querySelector(".final-section").classList.add("active");
+           } else if (index + 1 === fotos.length) {
+        // Última imagen mostrada -> ahora ir al video
+        document.querySelector(".gallery").classList.remove("active");
+        document.querySelector(".final-section").classList.add("active");
 
-            // 🚀 NUEVO: Pausar música al llegar al video
-            const music = document.getElementById("bgMusic");
-            music.pause();
-            music.currentTime = 0; 
+        // 🚀 Detener música
+        const music = document.getElementById("bgMusic");
+        music.pause();
+        music.currentTime = 0;
 
-            // 🚀 NUEVO: Reproducir video automáticamente
-            const video = document.getElementById("loveVideo");
-            video.play();
+        // 🚀 Reproducir video
+        const video = document.getElementById("loveVideo");
+        video.play();
             
         }
     });
@@ -197,6 +198,7 @@
 
 </body>
 </html>
+
 
 
 
