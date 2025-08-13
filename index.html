@@ -178,23 +178,26 @@
         if(index % 2 === 0 && index + 1 < fotos.length) {
             index++;
             mostrarFoto();
-        }
-    });
-
-    document.getElementById("nextPair").addEventListener("click", () => {
-        if(index + 1 < fotos.length) {
-            index++;
-            mostrarFoto();
-        } else {
+            } else {
             document.querySelector(".gallery").classList.remove("active");
             document.querySelector(".final-section").classList.add("active");
 
+            // 🚀 NUEVO: Pausar música al llegar al video
+            const music = document.getElementById("bgMusic");
+            music.pause();
+            music.currentTime = 0; 
+
+            // 🚀 NUEVO: Reproducir video automáticamente
+            const video = document.getElementById("loveVideo");
+            video.play();
+            
         }
     });
 </script>
 
 </body>
 </html>
+
 
 
 
